@@ -1,0 +1,11 @@
+#!/bin/bash
+find . -maxdepth 1 -mindepth 1 -not -name ".*" -printf "%A@ %p\n" |
+  sort -nr |
+  awk -F' ' '{
+    name=$2
+    sub("^\\./", "", name)
+    if (system("[ -d \""name"\" ]") == 0) name=name"/"
+    print name
+  }' |
+  paste -sd, -
+
